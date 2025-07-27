@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Chatbot Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f2ea;
+            color: #5c4b3a;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            background: #8b5a2b;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(91, 71, 50, 0.2);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #5C2D1A;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            letter-spacing: 1.5px;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .historical-figures {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+        
+        .figure-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .figure-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .figure-image {
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .figure-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .figure-card:hover .figure-image img {
+            transform: scale(1.05);
+        }
+        
+        .figure-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .figure-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #5C2D1A;
+        }
+        
+        .figure-time {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .chat-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #8B4513;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .chat-button:hover {
+            background-color: #5C2D1A;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-interface {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(91, 71, 50, 0.15);
+            overflow: hidden;
+            border: 1px solid #d9c7b8;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 70%;
+            font-size: 1.05rem;
+        }
+
+        .bot-message {
+            background: #e8d9c5;
+            color: #5c4b3a;
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: #5c4b3a;
+            color: white;
+            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            background: #f0e6d9;
+            border-top: 1px solid #d9c7b8;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #d9c7b8;
+            border-radius: 30px;
+            margin-right: 15px;
+            background: white;
+            color: #5c4b3a;
+            font-size: 1rem;
+        }
+
+        .send-button {
+            padding: 14px 30px;
+            background-color: #8b5a2b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .send-button:hover {
+            background-color: #5C2D1A;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #8B4513;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .historical-figures {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Historical Chatbot Portal</h1>
+            <p class="subtitle">Choose a historical figure to chat with</p>
+        </header>
+        
+        <main>
+            <div class="historical-figures">
+                <!-- Figure 1: Albert Einstein -->
+                <div class="figure-card">
+                    <div class="figure-image">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4d5859b1-22d7-4d09-b095-7de7fa248e31.png" alt="Portrait of Albert Einstein, physicist with wild white hair working on equations">
+                    </div>
+                    <div class="figure-info">
+                        <h2 class="figure-name">Albert Einstein</h2>
+                        <p class="figure-time">1879 - 1955</p>
+                        <a href="eistein-chat.html" class="chat-button">Chat with Einstein</a>
+                    </div>
+                </div>
+                
+                <!-- Figure 2: Cleopatra -->
+                <div class="figure-card">
+                    <div class="figure-image">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7d92593f-6217-4dd1-a542-c926a4a66e86.png" alt="Depiction of Cleopatra in Egyptian royal regalia with gold jewelry and headdress">
+                    </div>
+                    <div class="figure-info">
+                        <h2 class="figure-name">Cleopatra</h2>
+                        <p class="figure-time">69 BC - 30 BC</p>
+                        <a href="cleopatra-chat.html" class="chat-button">Chat with Cleopatra</a>
+                    </div>
+                </div>
+                
+                <!-- Figure 3: Leonardo da Vinci -->
+                <div class="figure-card">
+                    <div class="figure-image">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4b913f21-9349-48ae-8822-ed2e117a3800.png" alt="Self-portrait of Leonardo da Vinci with long white beard wearing Renaissance attire">
+                    </div>
+                    <div class="figure-info">
+                        <h2 class="figure-name">Leonardo da Vinci</h2>
+                        <p class="figure-time">1452 - 1519</p>
+                        <a href="davinci-chat.html" class="chat-button">Chat with Da Vinci</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Step into history - Interactive conversations with historical figures</p>
+        </footer>
+    </div>
+</body>
+</html>
